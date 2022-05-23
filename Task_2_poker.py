@@ -265,7 +265,7 @@ def compare_of_equal_combos(hand_max: list, max_score: int) -> list:
 # kit_cards = [(12, 'S'), (12, 'D'), (7, 'H'), (12, 'C'), (7, 'S'), (7, 'D'), (2, 'D')]  # Full house
 # kit_cards = [(2, 'H'), (6, 'S'), (6, 'C'), (6, 'H'), (6, 'D'), (4, 'S'), (8, 'C')]  # Four of a kind
 # kit_cards = [(2, 'H'), (3, 'H'), (4, 'H'), (5, 'H'), (6, 'H'), (7, 'H'), (8, 'H')]  # Straight flush
-# kit_cards = [(4, 'H'), (3, 'S'), (10, 'H'), (11, 'H'), (12, 'H'), (13, 'H'), (14, 'H')]  # Royal flush
+kit_cards = [(4, 'H'), (3, 'S'), (10, 'H'), (11, 'H'), (12, 'H'), (13, 'H'), (14, 'H')]  # Royal flush
 # kit_cards = [(2, 'S'), (4, 'H'), (6, 'H'), (8, 'H'), (10, 'H'), (12, 'H'), (14, 'C')]
 # kit_cards = [(2, 'H'), (4, 'C'), (6, 'C'), (8, 'C'), (10, 'C'), (12, 'H'), (14, 'C')]
 # kit_cards = []
