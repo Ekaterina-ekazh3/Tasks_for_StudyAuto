@@ -16,11 +16,8 @@ class SevenCards:
     def __init__(self, k_c=None):
         self.list_of_cards = k_c or []
 
-        if not SevenCards.check_quantity(k_c=self.list_of_cards, quantity=7):
-            raise RuntimeError(f"Invalid quantity of cards: {len(set(self.list_of_cards))}!")
-
-        if not SevenCards.check_duplicates(k_c=self.list_of_cards):
-            raise RuntimeError(f"Card deck has duplicates: {self.list_of_cards}!")
+        if not SevenCards.check_quantity_and_duplicates(k_c=self.list_of_cards, quantity=7):
+            raise RuntimeError(f"Cards deck doesn't have 7 unique cards: {len(set(self.list_of_cards))}!")
 
         if not SevenCards.check_card_attributes(k_c=self.list_of_cards):
             raise RuntimeError("Invalid card attributes!")
@@ -32,34 +29,27 @@ class SevenCards:
             raise ValueError("Invalid value of card suit!")
 
     @staticmethod
-    def check_quantity(k_c: list, quantity: int) -> bool:
+    def check_quantity_and_duplicates(k_c: list, quantity: int) -> bool:
         return len(set(k_c)) == quantity
 
     @staticmethod
-    def check_duplicates(k_c: list) -> bool:
-        return True
-
-    @staticmethod
     def check_card_attributes(k_c: list) -> bool:
-        def check_card(card: tuple) -> bool:
-            return len(card) == 2 and type(card[0]) == int and type(card[1]) == str
-
-        return False not in list(map(check_card, k_c))
+        return all([len(c) == 2 and type(c[0]) == int and type(c[1]) == str for c in k_c])
 
     @staticmethod
     def check_nominal(k_c: list) -> bool:
-        return False not in [True if c[0] in (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) else False for c in k_c]
+        return all([c[0] in (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) for c in k_c])
 
     @staticmethod
     def check_suit(k_c: list) -> bool:
-        return False not in [True if c[1] in ('H', 'S', 'C', 'D') else False for c in k_c]
+        return all([c[1] in ('H', 'S', 'C', 'D') for c in k_c])
 
 
 def define_winner_hand(scs: SevenCards) -> tuple:
     if not isinstance(scs, SevenCards):
-        raise TypeError("В функцию define_winner_hand передан аргумент некорректного типа!")
+        raise TypeError("Incorrect type argument transmitted to define_winner_hand function!")
     if not scs.list_of_cards:
-        raise ValueError("Содержимое аргумента, переданного в функцию define_winner_hand не корректно!")
+        raise ValueError("The content of the argument transmitted to the define_winner_hand function is not correct!")
 
     all_combo_in_hand = list(combinations(scs.list_of_cards, 5))
 
@@ -127,9 +117,9 @@ def score_combo_without_same_suit(shnd: list) -> int:
 
 def score_for_a_combination(ordered_acih_by_suits: list) -> list:
     if not isinstance(ordered_acih_by_suits, list):
-        raise TypeError("В функцию scoring_for_a_combination передан аргумент некорректного типа!")
+        raise TypeError("Incorrect type argument transmitted to scoring_for_a_combination function!")
     if not ordered_acih_by_suits:
-        raise ValueError("Содержимое аргумента, переданного в функцию scoring_for_a_combination не корректно!")
+        raise ValueError("The content of the argument transmitted to the scoring_for_a_combination function is not correct!")
 
     hands_scores = [score_combo_with_same_suit(shnd) if shnd[0][1] == shnd[4][1] else score_combo_without_same_suit(shnd) for shnd in ordered_acih_by_suits]
     return hands_scores
@@ -137,18 +127,18 @@ def score_for_a_combination(ordered_acih_by_suits: list) -> list:
 
 def clean_of_card_suit(hand_max: list) -> list:
     if not isinstance(hand_max, list):
-        raise TypeError("В функцию clean_of_card_suit передан аргумент некорректного типа!")
+        raise TypeError("Incorrect type argument transmitted to clean_of_card_suit function!")
     if not hand_max:
-        raise ValueError("Содержимое аргумента, переданного в функцию clean_of_card_suit не корректно!")
+        raise ValueError("The content of the argument transmitted to the clean_of_card_suit function is not correct!")
 
     return [[hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]] for hand in hand_max]
 
 
 def find_win_hand(hand_max_without_suit: list, hand_max: list, max_score: int) -> list:
     if not isinstance(hand_max_without_suit, list) or not isinstance(hand_max, list) or not isinstance(max_score, int):
-        raise TypeError("В функцию find_win_hand передан аргумент некорректного типа!")
+        raise TypeError("Incorrect type argument transmitted to find_win_hand function!")
     if not hand_max_without_suit or not hand_max or not max_score:
-        raise ValueError("Содержимое аргумента, переданного в функцию find_win_hand не корректно!")
+        raise ValueError("The content of the argument transmitted to the find_win_hand function is not correct!")
 
     if max_score == 9 or max_score == 5:
         winner = 0
@@ -199,9 +189,9 @@ def check_equals_for_fullhouse(hand_max_without_suit: list, hand_max: list) -> l
 
 def compare_of_equal_combos(hand_max: list, max_score: int) -> list:
     if not isinstance(hand_max, list) or not isinstance(max_score, int):
-        raise TypeError("В функцию compare_of_equal_combos передан аргумент некорректного типа!")
+        raise TypeError("Incorrect type argument transmitted to compare_of_equal_combos function!")
     if not hand_max or not max_score:
-        raise ValueError("Содержимое аргумента, переданного в функцию clean_of_card_suit не корректно!")
+        raise ValueError("The content of the argument transmitted to the clean_of_card_suit function is not correct!")
 
     win_hand = []
 
